@@ -71,14 +71,28 @@ class CalcController{
 
         this._operation = [result, last];
 
+        this.setLastNumberToDisplay();
+
     }
 
     setLastNumberToDisplay(){
-        
+        let lastNumber;
+
+        for (let i = this._operation.length - 1; i >= 0; i--) {
+
+            if (!this.isOperation(this._operation[i])) {
+                lastNumber = this._operation[i];
+                break;
+            }
+
+        }
+
+        console.log('lastNumber', lastNumber);
+
+        this.displayCalc = lastNumber;
     }
 
     addOperation(value){
-        console.log('A',value, isNaN(this.getLastOperation()));
         if(isNaN(this.getLastOperation())){
             //String
             if(this.isOperation(value)){
@@ -86,11 +100,11 @@ class CalcController{
                 this.setLastOperation(value);
 
             }else if (isNaN(value)){
-                //Outra coisa
                 
                 console.log(value);
             }else{
                 this.pushOperation(value);
+                this.setLastNumberToDisplay();
             }
         }else{
             if(this.isOperation(value)){
